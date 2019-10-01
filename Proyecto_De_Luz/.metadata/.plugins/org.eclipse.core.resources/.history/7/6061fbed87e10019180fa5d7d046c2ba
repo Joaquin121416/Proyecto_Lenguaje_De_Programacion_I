@@ -1,0 +1,292 @@
+package com.loquesea.frames;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+
+import com.loquesea.animaciones.SLAnimator;
+import com.loquesea.animaciones.SLConfig;
+import com.loquesea.animaciones.SLKeyframe;
+import com.loquesea.animaciones.SLPanel;
+import com.loquesea.animaciones.SLSide;
+import com.loquesea.animaciones.Movimiento;
+
+
+
+@SuppressWarnings("serial")
+public class TheFrame extends JFrame {
+	private final SLPanel panel = new SLPanel();
+	private final ThePanel p1 = new ThePanel("1", "src/data/img1.jpg", "VENTAS");
+	private final ThePanel p2 = new ThePanel("2", "src/data/img2.jpg", "MANTENIMIENTO");
+	private final ThePanel p3 = new ThePanel("3", "src/data/img3.jpg", "SALIR");
+	private final ThePanel p4 = new ThePanel("4", "src/data/img4.jpg", "REPORTES");
+	private final ThePanel p5 = new ThePanel("5", "src/data/img5.jpg", "CONSULTAS");
+	JScrollPane scrollPane;
+	private final Ventas In = new Ventas(true, true);
+	private final Canjear Ca = new Canjear(true, true);
+	private final Mantenimiento Ma = new Mantenimiento(true, true);
+	private final Reportes Re = new Reportes(true, true);
+	private final Consultas Co = new Consultas(true, true);
+	private final SLConfig mainCfg, p1Cfg, p2Cfg, p3Cfg, p4Cfg, p5Cfg;
+	public static String User;
+
+	// quiero una interfaz binoita
+
+	public TheFrame(String Cargo, String User) {
+		TheFrame.User = User;
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TheFrame.class.getResource("/data/icono_logo.png")));
+
+		setUndecorated(true);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Starbucks : Capa Negocio");
+		getContentPane().setBackground(Color.LIGHT_GRAY);
+		panel.setBackground(Color.LIGHT_GRAY);
+		getContentPane().add(panel, BorderLayout.CENTER);
+
+		Movimiento mml = new Movimiento(panel);
+		panel.addMouseListener(mml);
+		panel.addMouseMotionListener(mml);
+
+		p1.setAction(p1Action);
+		p2.setAction(p2Action);
+		p3.setAction(p3Action);
+		p4.setAction(p4Action);
+		p5.setAction(p5Action);
+
+		mainCfg = new SLConfig(panel).gap(15, 15).row(1f).col(250).col(1f).col(2f).beginGrid(0, 0).row(2f).row(1f)
+				.col(1f).place(0, 0, p1).place(1, 0, p2).endGrid().beginGrid(0, 1).row(1f).row(2f).col(1f)
+				.place(0, 0, p3).place(1, 0, p4).endGrid().place(0, 2, p5);
+
+		p1.add(In);
+		p3.add(Ca);
+		p2.add(Ma);
+		p4.add(Re);
+		p5.add(Co);
+
+		p1Cfg = new SLConfig(panel).gap(10, 10).row(1f).col(1f).place(0, 0, p1).beginGrid(0, 1).row(1f).row(2f).col(1f)
+				.place(0, 0, p3).place(1, 0, p4).endGrid().place(0, 2, p5);
+
+		p2Cfg = new SLConfig(panel).gap(10, 10).row(1f).col(3f).place(1, 1, p2).beginGrid(0, 0).row(1f).col(1f)
+				.beginGrid(0, 0).row(1f).col(1f).endGrid().place(0, 0, p2);
+
+		p3Cfg = new SLConfig(panel).gap(10, 10).row(1f).col(1f).place(0, 0, p3);
+
+		p4Cfg = new SLConfig(panel).gap(10, 10).row(1f).col(1f).place(0, 0, p4);
+
+		p5Cfg = new SLConfig(panel).gap(10, 10).row(1f).col(1f).place(0, 0, p5);
+
+		panel.setTweenManager(SLAnimator.createTweenManager());
+		panel.initialize(mainCfg);
+
+		if (Cargo.equals("VENDEDOR")) {
+			p2.setAction(null);
+			p3.setAction(null);
+			p4.setAction(null);
+			p5.setAction(null);
+			p2.setEnabled(false);
+			p3.setEnabled(false);
+			p4.setEnabled(false);
+			p5.setEnabled(false);
+		} else if (Cargo.equals("ADMINISTRADOR")) {
+
+		}
+	}
+
+	private void disableActions() {
+		p1.disableAction();
+		p2.disableAction();
+		p3.disableAction();
+		p4.disableAction();
+		p5.disableAction();
+	}
+
+	private void enableActions() {
+		p1.enableAction();
+		p2.enableAction();
+		p3.enableAction();
+		p4.enableAction();
+		p5.enableAction();
+	}
+
+	private final Runnable p1Action = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+
+			panel.createTransition().push(new SLKeyframe(p1Cfg, 0.6f).setEndSide(SLSide.BOTTOM, p2)
+					.setEndSide(SLSide.RIGHT, p3, p4, p5).setDelay(0.4f, In).setCallback(new SLKeyframe.Callback() {
+						@Override
+						public void done() {
+							p1.setAction(p1BackAction);
+							p1.enableAction();
+							In.setVisible(true);
+						}
+					})).play();
+		}
+	};
+
+	private final Runnable p1BackAction = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+
+			In.setVisible(false);
+
+			panel.createTransition().push(new SLKeyframe(mainCfg, 0.6f).setStartSide(SLSide.BOTTOM, p2)
+					.setCallback(new SLKeyframe.Callback() {
+						@Override
+						public void done() {
+							p1.setAction(p1Action);
+							enableActions();
+
+						}
+					})).play();
+		}
+	};
+
+	private final Runnable p2Action = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+
+			panel.createTransition().push(new SLKeyframe(p2Cfg, 0.6f).setEndSide(SLSide.LEFT, p1).setDelay(0.6F, Ma)
+					.setEndSide(SLSide.RIGHT, p4, p5, p3).setDelay(0.6f, p2).setCallback(new SLKeyframe.Callback() {
+						@Override
+						public void done() {
+							p2.setAction(p2BackAction);
+							p2.enableAction();
+							Ma.setVisible(true);
+
+						}
+					})).play();
+		}
+	};
+
+	private final Runnable p2BackAction = new Runnable() {
+		@Override
+		public void run() {
+
+			disableActions();
+
+			Ma.setVisible(false);
+
+			panel.createTransition()
+					.push(new SLKeyframe(mainCfg, 0.6f).setStartSide(SLSide.RIGHT, p4, p5, p3)
+							.setStartSide(SLSide.LEFT, p1).setDelay(0.6f, p1, p4, p5, p3)
+							.setCallback(new SLKeyframe.Callback() {
+								@Override
+								public void done() {
+									p2.setAction(p2Action);
+									enableActions();
+								}
+							}))
+					.play();
+		}
+	};
+
+	private final Runnable p3Action = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+
+			panel.createTransition().push(new SLKeyframe(p3Cfg, 0.8f).setEndSide(SLSide.LEFT, p1, p2).setDelay(0.4F, Ca)
+					.setEndSide(SLSide.BOTTOM, p4, p5).setCallback(new SLKeyframe.Callback() {
+						@Override
+						public void done() {
+							p3.setAction(p3BackAction);
+							p3.enableAction();
+							Ca.setVisible(true);
+						}
+					})).play();
+		}
+	};
+
+	private final Runnable p3BackAction = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+			Ca.setVisible(false);
+			panel.createTransition().push(new SLKeyframe(mainCfg, 0.8f).setStartSide(SLSide.LEFT, p1, p2)
+					.setStartSide(SLSide.BOTTOM, p4, p5).setCallback(new SLKeyframe.Callback() {
+						@Override
+						public void done() {
+							p3.setAction(p3Action);
+							enableActions();
+						}
+					})).play();
+		}
+	};
+
+	private final Runnable p4Action = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+
+			panel.createTransition().push(new SLKeyframe(p4Cfg, 0.6f).setEndSide(SLSide.RIGHT, p5).setDelay(0.4F, Re)
+					.setEndSide(SLSide.LEFT, p1, p2).setEndSide(SLSide.TOP, p3).setCallback(new SLKeyframe.Callback() {
+						@Override
+						public void done() {
+							p4.setAction(p4BackAction);
+							p4.enableAction();
+							Re.setVisible(true);
+						}
+					})).play();
+		}
+	};
+
+	private final Runnable p4BackAction = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+			Re.setVisible(false);
+			panel.createTransition()
+					.push(new SLKeyframe(mainCfg, 0.6f).setStartSide(SLSide.RIGHT, p5).setStartSide(SLSide.LEFT, p1, p2)
+							.setDelay(0.4F, Co).setStartSide(SLSide.TOP, p3).setCallback(new SLKeyframe.Callback() {
+								@Override
+								public void done() {
+									p4.setAction(p4Action);
+									enableActions();
+
+								}
+							}))
+					.play();
+		}
+	};
+
+	private final Runnable p5Action = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+
+			panel.createTransition().push(new SLKeyframe(p5Cfg, 0.8f).setEndSide(SLSide.LEFT, p1, p2, p3, p4)
+					.setDelay(0.4F, Co).setCallback(new SLKeyframe.Callback() {
+						@Override
+						public void done() {
+							p5.setAction(p5BackAction);
+							p5.enableAction();
+							Co.setVisible(true);
+						}
+					})).play();
+		}
+	};
+
+	private final Runnable p5BackAction = new Runnable() {
+		@Override
+		public void run() {
+			disableActions();
+			Co.setVisible(false);
+			panel.createTransition().push(new SLKeyframe(mainCfg, 0.8f).setStartSide(SLSide.LEFT, p1, p2, p3, p4)
+					.setCallback(new SLKeyframe.Callback() {
+						@Override
+						public void done() {
+							p5.setAction(p5Action);
+							enableActions();
+						}
+					})).play();
+		}
+	};
+}

@@ -1,0 +1,113 @@
+package com.loquesea.frames;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import com.loquesea.animaciones.SLAnimator;
+import com.starbucks.sistema.venta.logica.Diseno.Movimiento;
+
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenAccessor;
+
+public class Main implements ActionListener {
+	private static JPanel panel;
+	private static JButton btnSalir;
+	private static JButton btnAjustes;
+	private static JLabel lblLblmarco;
+
+	public static void main(String[] args) {
+
+		Tween.registerAccessor(ThePanel.class, (TweenAccessor<?>) new ThePanel.Accessor());
+		SLAnimator.start();
+
+		TheFrame frame = new TheFrame("ADMINISTRADOR","V0004");
+		frame.setResizable(true);
+		frame.setSize(800, 650);
+		frame.setLocationRelativeTo(null);
+
+		panel = new JPanel();
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setSize(new Dimension(0, 50));
+		panel.setMinimumSize(new Dimension(1001001, 100));
+		frame.getContentPane().add(panel, BorderLayout.SOUTH);
+
+		Movimiento mml = new Movimiento(panel);
+		panel.addMouseListener(mml);
+		panel.addMouseMotionListener(mml);
+
+		lblLblmarco = new JLabel("\r\n");
+		lblLblmarco.setIcon(new ImageIcon(Main.class.getResource("/data/Webp.net-resizeimage (2).png")));
+		panel.add(lblLblmarco);
+
+		btnAjustes = new JButton("Ajustes");
+		btnAjustes.setIcon(new ImageIcon(Main.class.getResource("/data/imgIconBorrar.png")));
+		panel.add(btnAjustes);
+
+		btnSalir = new JButton("Salir");
+
+		btnSalir.setIcon(new ImageIcon(Main.class.getResource("/data/imgIconBorrar.png")));
+		panel.add(btnSalir);
+		frame.setVisible(true);
+
+	}
+
+	public void Abrir(String Cargo,String User) {
+		Tween.registerAccessor(ThePanel.class, (TweenAccessor<?>) new ThePanel.Accessor());
+		SLAnimator.start();
+
+		TheFrame frame = new TheFrame(Cargo,User);
+		frame.setResizable(true);
+		frame.setSize(800, 650);
+		frame.setLocationRelativeTo(null);
+
+		panel = new JPanel();
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setSize(new Dimension(0, 50));
+		panel.setMinimumSize(new Dimension(1001001, 100));
+		frame.getContentPane().add(panel, BorderLayout.SOUTH);
+
+		Movimiento mml = new Movimiento(panel);
+		panel.addMouseListener(mml);
+		panel.addMouseMotionListener(mml);
+
+		lblLblmarco = new JLabel("\r\n");
+		lblLblmarco.setIcon(new ImageIcon(Main.class.getResource("/data/Webp.net-resizeimage (2).png")));
+		panel.add(lblLblmarco);
+
+		btnAjustes = new JButton("Ajustes");
+		btnAjustes.setIcon(new ImageIcon(Main.class.getResource("/data/imgIconBorrar.png")));
+		panel.add(btnAjustes);
+
+		btnSalir = new JButton("Salir");
+		btnSalir.setIcon(new ImageIcon(Main.class.getResource("/data/imgIconBorrar.png")));
+		panel.add(btnSalir);
+		btnSalir.addActionListener(this);
+		frame.setVisible(true);
+
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == btnSalir) {
+			actionPerformedBtnSalir(arg0);
+		}
+	}
+
+	protected static void actionPerformedBtnSalir(ActionEvent arg0) {
+
+		int respuesta = JOptionPane.showConfirmDialog(null, "Realmente desea salir del Programa?", "Confirmar salida",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		if (respuesta == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
+	}
+}

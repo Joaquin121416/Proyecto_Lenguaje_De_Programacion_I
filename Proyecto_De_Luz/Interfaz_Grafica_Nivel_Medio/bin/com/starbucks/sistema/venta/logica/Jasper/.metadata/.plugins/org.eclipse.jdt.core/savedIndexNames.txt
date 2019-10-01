@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+F:\Proyecto_Java_Este_Es\Interfaz_Grafica_Nivel_Medio\src\Jasper\.metadata\.plugins\org.eclipse.jdt.core

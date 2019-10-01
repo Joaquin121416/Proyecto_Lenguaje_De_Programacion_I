@@ -1,0 +1,507 @@
+package com.loquesea.frames;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+/*
+import com.starbucks.sistema.venta.entidades.Clases.Categoria;
+import com.starbucks.sistema.venta.graficas.Dialogs.AgregarCategoria;
+import com.starbucks.sistema.venta.graficas.Dialogs.AgregarCliente;
+import com.starbucks.sistema.venta.graficas.Dialogs.AgregarEmpleado;
+import com.starbucks.sistema.venta.graficas.Dialogs.AgregarProductos;
+import com.starbucks.sistema.venta.graficas.Dialogs.ListaDeCategoriasModificar;
+import com.starbucks.sistema.venta.graficas.Dialogs.ListaDeClientesModificar;
+import com.starbucks.sistema.venta.graficas.Dialogs.ListaDeEmpleadosModificar;
+import com.starbucks.sistema.venta.graficas.Dialogs.ListaDeProductosModificar;
+import com.starbucks.sistema.venta.logica.Mantenimiento.GestionCategoria;
+*/
+import Animacion.Animacion;
+
+public class Mantenimiento extends JPanel implements ActionListener {
+	private JButton btnAgregar;
+	private JLabel lblImagenAgregarProductos;
+	private JButton btnModificarProductos;
+	private JLabel lblImagenModificarProductos;
+	private JButton btnAgregarTrabajador;
+	private JLabel lblImagenAgregarTrabajador;
+	private JButton btnModificarTrabajador;
+	private JLabel lblImagenModificarTrabajador;
+	private JButton btnAgregarCategoria;
+	private JLabel lblImagenAgregarCategoria;
+	private JButton btnModificarCategoria;
+	private JLabel lblModificarCategoria;
+	private JButton btnAgregarCliente;
+	private JLabel lblAgregarClientes;
+	private JButton btnModificarClientes;
+	private JLabel lblModificarClientes;
+	private JButton btnAtras;
+	private JButton btnAdelante;
+
+	private static final long serialVersionUID = 1L;
+	private JLabel lblContador;
+	private JLabel lblMaximo;
+	private JLabel lblImagenIngresarInventario;
+	private JButton btnIngresarInventario;
+	private JButton btnModificarInventario;
+	private JLabel lblImagenModificarInventario;
+	private JLabel lblImagenIngresarCategoriaDePago;
+	private JButton btnIngresarCategoriaDe;
+	private JButton btnModificarCategoriaDe;
+	private JLabel lblModificarCategoriaDePago;
+
+	public Mantenimiento(Boolean Condicion, Boolean Condicion2) {
+		setOpaque(false);
+		setVisible(false);
+		setLayout(null);
+
+		btnModificarProductos = new JButton("Modificar Productos");
+		btnModificarProductos.addActionListener(this);
+
+		btnAdelante = new JButton("");
+		btnAdelante.addActionListener(this);
+		btnAdelante.setIcon(new ImageIcon(Mantenimiento.class.getResource("/imagen/BACK.png")));
+		btnAdelante.setFocusPainted(false);
+		btnAdelante.setContentAreaFilled(false);
+		btnAdelante.setBorder(null);
+		btnAdelante.setBounds(720, 246, 78, 23);
+		add(btnAdelante);
+
+		btnAtras = new JButton("");
+		btnAtras.addActionListener(this);
+		btnAtras.setIcon(new ImageIcon(Mantenimiento.class.getResource("/imagen/NEXT.png")));
+		btnAtras.setFocusPainted(false);
+		btnAtras.setContentAreaFilled(false);
+		btnAtras.setBorder(null);
+		btnAtras.setBounds(-22, 246, 89, 23);
+		add(btnAtras);
+		btnModificarProductos.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgIconUpdate.png")));
+		btnModificarProductos.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnModificarProductos.setBounds(216, 11, 165, 60);
+		add(btnModificarProductos);
+		btnAtras.setEnabled(false);
+
+		lblImagenModificarProductos = new JLabel("");
+		lblImagenModificarProductos
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgModificarProducto.png")));
+		lblImagenModificarProductos.setBounds(216, 81, 165, 165);
+		add(lblImagenModificarProductos);
+
+		btnAgregarTrabajador = new JButton("Agregar Trabajador");
+		btnAgregarTrabajador.addActionListener(this);
+		btnAgregarTrabajador.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgIconA\u00F1adir.png")));
+		btnAgregarTrabajador.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnAgregarTrabajador.setBounds(391, 11, 165, 60);
+		add(btnAgregarTrabajador);
+
+		lblImagenAgregarTrabajador = new JLabel("");
+		lblImagenAgregarTrabajador
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgAgregarTrabajador.png")));
+		lblImagenAgregarTrabajador.setBounds(391, 81, 165, 165);
+		add(lblImagenAgregarTrabajador);
+
+		btnModificarTrabajador = new JButton("Modificar Trabajador");
+		btnModificarTrabajador.addActionListener(this);
+		btnModificarTrabajador.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgIconBorrar.png")));
+		btnModificarTrabajador.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnModificarTrabajador.setBounds(566, 11, 165, 60);
+		add(btnModificarTrabajador);
+
+		lblImagenModificarTrabajador = new JLabel("");
+		lblImagenModificarTrabajador.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblImagenModificarTrabajador
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgModificarTrabajador.png")));
+		lblImagenModificarTrabajador.setBounds(566, 81, 165, 165);
+		add(lblImagenModificarTrabajador);
+
+		btnAgregarCategoria = new JButton("Agregar Categoria");
+		btnAgregarCategoria.addActionListener(this);
+		btnAgregarCategoria.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgIconA\u00F1adir.png")));
+		btnAgregarCategoria.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnAgregarCategoria.setBounds(43, 257, 165, 60);
+		add(btnAgregarCategoria);
+
+		lblImagenAgregarCategoria = new JLabel("");
+		lblImagenAgregarCategoria
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgAgregarInsumos.png")));
+		lblImagenAgregarCategoria.setBounds(43, 327, 165, 165);
+		add(lblImagenAgregarCategoria);
+
+		btnModificarCategoria = new JButton("Modificar Categoria");
+		btnModificarCategoria.addActionListener(this);
+		btnModificarCategoria.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgIconUpdate.png")));
+		btnModificarCategoria.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnModificarCategoria.setBounds(216, 257, 165, 60);
+		add(btnModificarCategoria);
+
+		lblModificarCategoria = new JLabel("");
+		lblModificarCategoria.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgModificarInsumos.png")));
+		lblModificarCategoria.setBounds(216, 327, 165, 165);
+		add(lblModificarCategoria);
+
+		btnAgregarCliente = new JButton("Agregar Cliente\r\n");
+		btnAgregarCliente.addActionListener(this);
+		btnAgregarCliente.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgIconA\u00F1adir.png")));
+		btnAgregarCliente.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnAgregarCliente.setBounds(391, 257, 165, 60);
+		add(btnAgregarCliente);
+
+		lblAgregarClientes = new JLabel("");
+		lblAgregarClientes.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgAgregarTrabajador.png")));
+		lblAgregarClientes.setBounds(391, 327, 165, 165);
+		add(lblAgregarClientes);
+
+		btnModificarClientes = new JButton("Modificar Clientes\r\n");
+		btnModificarClientes.addActionListener(this);
+		btnModificarClientes.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgIconUpdate.png")));
+		btnModificarClientes.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnModificarClientes.setBounds(566, 257, 165, 60);
+		add(btnModificarClientes);
+
+		lblModificarClientes = new JLabel("");
+		lblModificarClientes.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgModificarProducto.png")));
+		lblModificarClientes.setBounds(566, 327, 165, 165);
+		add(lblModificarClientes);
+		btnAgregar = new JButton("Agregar Productos");
+		btnAgregar.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgIconA\u00F1adir.png")));
+		btnAgregar.addActionListener(this);
+		btnAgregar.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnAgregar.setBounds(43, 11, 165, 60);
+		add(btnAgregar);
+
+		lblImagenAgregarProductos = new JLabel("");
+		lblImagenAgregarProductos
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgAgregarProducto.png")));
+		lblImagenAgregarProductos.setBounds(43, 81, 165, 165);
+		add(lblImagenAgregarProductos);
+
+		lblContador = new JLabel("1");
+		lblContador.setForeground(Color.BLACK);
+		lblContador.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblContador.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+		lblContador.setFont(new Font("Tahoma", Font.BOLD, 23));
+		lblContador.setBounds(335, 491, 46, 53);
+		add(lblContador);
+
+		lblMaximo = new JLabel("/\r\n2");
+		lblMaximo.setForeground(Color.BLACK);
+		lblMaximo.setFont(new Font("Tahoma", Font.BOLD, 23));
+		lblMaximo.setBounds(382, 491, 46, 53);
+		add(lblMaximo);
+
+		lblImagenIngresarInventario = new JLabel("");
+		lblImagenIngresarInventario
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgModificarTrabajador.png")));
+		lblImagenIngresarInventario.setBounds(782, 81, 165, 165);
+		add(lblImagenIngresarInventario);
+
+		btnIngresarInventario = new JButton("Ingresar Inventario");
+		btnIngresarInventario.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnIngresarInventario.setBounds(782, 11, 165, 60);
+		add(btnIngresarInventario);
+
+		btnModificarInventario = new JButton("Modificar Inventario");
+		btnModificarInventario.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnModificarInventario.setBounds(955, 11, 165, 60);
+		add(btnModificarInventario);
+
+		lblImagenModificarInventario = new JLabel("");
+		lblImagenModificarInventario
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgModificarTrabajador.png")));
+		lblImagenModificarInventario.setBounds(955, 81, 165, 165);
+		add(lblImagenModificarInventario);
+
+		lblImagenIngresarCategoriaDePago = new JLabel("");
+		lblImagenIngresarCategoriaDePago
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgModificarTrabajador.png")));
+		lblImagenIngresarCategoriaDePago.setBounds(1130, 81, 165, 165);
+		add(lblImagenIngresarCategoriaDePago);
+
+		btnIngresarCategoriaDe = new JButton("Ingresar Categoria de Pago\r\n");
+		btnIngresarCategoriaDe.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnIngresarCategoriaDe.setBounds(1130, 11, 165, 60);
+		add(btnIngresarCategoriaDe);
+
+		btnModificarCategoriaDe = new JButton("Modificar Categoria de Pago\r\n");
+		btnModificarCategoriaDe.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnModificarCategoriaDe.setBounds(1305, 11, 165, 60);
+		add(btnModificarCategoriaDe);
+
+		lblModificarCategoriaDePago = new JLabel("");
+		lblModificarCategoriaDePago
+				.setIcon(new ImageIcon(Mantenimiento.class.getResource("/data/imgModificarTrabajador.png")));
+		lblModificarCategoriaDePago.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblModificarCategoriaDePago.setBounds(1305, 81, 165, 165);
+		add(lblModificarCategoriaDePago);
+
+	}
+
+	public Boolean SetVisible(Boolean Condicion) {
+		return Condicion;
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == btnModificarClientes) {
+			actionPerformedBtnModificarClientes(arg0);
+		}
+		if (arg0.getSource() == btnAgregarCliente) {
+			actionPerformedBtnAgregarCliente(arg0);
+		}
+		if (arg0.getSource() == btnModificarTrabajador) {
+			actionPerformedBtnModificarTrabajador(arg0);
+		}
+		if (arg0.getSource() == btnAgregarTrabajador) {
+			actionPerformedBtnAgregarTrabajador(arg0);
+		}
+		if (arg0.getSource() == btnAdelante) {
+			actionPerformedBtnAdelante(arg0);
+		}
+		if (arg0.getSource() == btnAtras) {
+			actionPerformedBtnAtras(arg0);
+		}
+		if (arg0.getSource() == btnModificarCategoria) {
+			actionPerformedBtnModificarCategoria(arg0);
+		}
+		if (arg0.getSource() == btnAgregarCategoria) {
+			actionPerformedBtnAgregarCategoria(arg0);
+		}
+		if (arg0.getSource() == btnModificarProductos) {
+			actionPerformedBtnModificarProductos(arg0);
+		}
+		if (arg0.getSource() == btnAgregar) {
+			actionPerformedBtnAgregarProducto(arg0);
+		}
+	}
+
+	protected void actionPerformedBtnAgregarProducto(ActionEvent arg0) {/*
+
+		AgregarProductos agregaPro = new AgregarProductos();
+		agregaPro.setVisible(true);
+		agregaPro.setLocationRelativeTo(null);
+
+		GestionCategoria gc = new GestionCategoria();
+		ArrayList<Categoria> lista = gc.listado();
+		if (lista.size() > 0) {
+			agregaPro.dispose();
+			JOptionPane.showMessageDialog(null, "Error no existe ninguna Categoria", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		*/
+	}
+
+	protected void actionPerformedBtnModificarProductos(ActionEvent arg0) {
+		/*
+
+		ListaDeProductosModificar lpm = new ListaDeProductosModificar();
+		lpm.setVisible(true);
+		lpm.setLocationRelativeTo(null);
+		*/
+	}
+
+	protected void actionPerformedBtnAgregarCategoria(ActionEvent arg0) {
+		/*
+
+		AgregarCategoria agregaCat = new AgregarCategoria();
+		agregaCat.setVisible(true);
+		agregaCat.setLocationRelativeTo(null);
+*/
+	}
+
+	protected void actionPerformedBtnModificarCategoria(ActionEvent arg0) {
+		/*
+		ListaDeCategoriasModificar lcm = new ListaDeCategoriasModificar();
+		lcm.setVisible(true);
+		lcm.setLocationRelativeTo(null);
+*/
+	}
+
+	protected void actionPerformedBtnAtras(ActionEvent arg0) {
+		if (Integer.parseInt(lblContador.getText()) == 2) {
+			int numeroMenos = 736;
+			Animacion.mover_derecha(btnAgregar.getX(), btnAgregar.getX() + numeroMenos, 10, 10, btnAgregar);
+			Animacion.mover_derecha(lblImagenAgregarProductos.getX(), lblImagenAgregarProductos.getX() + numeroMenos,
+					10, 10, lblImagenAgregarProductos);
+			Animacion.mover_derecha(btnAgregarCategoria.getX(), btnAgregarCategoria.getX() + numeroMenos, 10, 10,
+					btnAgregarCategoria);
+			Animacion.mover_derecha(lblImagenAgregarCategoria.getX(), lblImagenAgregarCategoria.getX() + numeroMenos,
+					10, 10, lblImagenAgregarCategoria);
+			Animacion.mover_derecha(btnAgregarCliente.getX(), btnAgregarCliente.getX() + numeroMenos, 10, 10,
+					btnAgregarCliente);
+			Animacion.mover_derecha(lblAgregarClientes.getX(), lblAgregarClientes.getX() + numeroMenos, 10, 10,
+					lblAgregarClientes);
+			Animacion.mover_derecha(btnAgregarTrabajador.getX(), btnAgregarTrabajador.getX() + numeroMenos, 10, 10,
+					btnAgregarTrabajador);
+			Animacion.mover_derecha(lblImagenAgregarTrabajador.getX(), lblImagenAgregarTrabajador.getX() + numeroMenos,
+					10, 10, lblImagenAgregarTrabajador);
+			// MOd
+			Animacion.mover_derecha(btnModificarProductos.getX(), btnModificarProductos.getX() + numeroMenos, 10, 10,
+					btnModificarProductos);
+			Animacion.mover_derecha(lblImagenModificarProductos.getX(),
+					lblImagenModificarProductos.getX() + numeroMenos, 10, 10, lblImagenModificarProductos);
+			Animacion.mover_derecha(btnModificarCategoria.getX(), btnModificarCategoria.getX() + numeroMenos, 10, 10,
+					btnModificarCategoria);
+			Animacion.mover_derecha(lblModificarCategoria.getX(), lblModificarCategoria.getX() + numeroMenos, 10, 10,
+					lblModificarCategoria);
+			Animacion.mover_derecha(btnModificarTrabajador.getX(), btnModificarTrabajador.getX() + numeroMenos, 10, 10,
+					btnModificarTrabajador);
+			Animacion.mover_derecha(lblImagenModificarTrabajador.getX(),
+					lblImagenModificarTrabajador.getX() + numeroMenos, 10, 10, lblImagenModificarTrabajador);
+			Animacion.mover_derecha(btnModificarClientes.getX(), btnModificarClientes.getX() + numeroMenos, 10, 10,
+					btnModificarClientes);
+			Animacion.mover_derecha(lblModificarClientes.getX(), lblModificarClientes.getX() + numeroMenos, 10, 10,
+					lblModificarClientes);
+
+			Animacion.mover_derecha(btnModificarTrabajador.getX(), btnModificarTrabajador.getX() + numeroMenos, 10, 10,
+					btnModificarTrabajador);
+			Animacion.mover_derecha(lblImagenModificarTrabajador.getX(),
+					lblImagenModificarTrabajador.getX() + numeroMenos, 10, 10, lblImagenModificarTrabajador);
+			Animacion.mover_derecha(btnModificarClientes.getX(), btnModificarClientes.getX() + numeroMenos, 10, 10,
+					btnModificarClientes);
+			Animacion.mover_derecha(lblModificarClientes.getX(), lblModificarClientes.getX() + numeroMenos, 10, 10,
+					lblModificarClientes);
+			Animacion.mover_derecha(btnModificarTrabajador.getX(), btnModificarTrabajador.getX() + numeroMenos, 10, 10,
+					btnModificarTrabajador);
+			Animacion.mover_derecha(lblImagenModificarTrabajador.getX(),
+					lblImagenModificarTrabajador.getX() + numeroMenos, 10, 10, lblImagenModificarTrabajador);
+			Animacion.mover_derecha(btnModificarClientes.getX(), btnModificarClientes.getX() + numeroMenos, 10, 10,
+					btnModificarClientes);
+			Animacion.mover_derecha(lblModificarClientes.getX(), lblModificarClientes.getX() + numeroMenos, 10, 10,
+					lblModificarClientes);
+
+			// 2 hoja
+
+			Animacion.mover_derecha(btnModificarInventario.getX(), btnModificarInventario.getX() + numeroMenos, 10, 10,
+					btnModificarInventario);
+			Animacion.mover_derecha(lblImagenModificarInventario.getX(),
+					lblImagenModificarInventario.getX() + numeroMenos, 10, 10, lblImagenModificarInventario);
+			Animacion.mover_derecha(btnIngresarInventario.getX(), btnIngresarInventario.getX() + numeroMenos, 10, 10,
+					btnIngresarInventario);
+			Animacion.mover_derecha(lblImagenIngresarInventario.getX(),
+					lblImagenIngresarInventario.getX() + numeroMenos, 10, 10, lblImagenIngresarInventario);
+			Animacion.mover_derecha(btnIngresarCategoriaDe.getX(), btnIngresarCategoriaDe.getX() + numeroMenos, 10, 10,
+					btnIngresarCategoriaDe);
+			Animacion.mover_derecha(lblImagenIngresarCategoriaDePago.getX(),
+					lblImagenIngresarCategoriaDePago.getX() + numeroMenos, 10, 10, lblImagenIngresarCategoriaDePago);
+			Animacion.mover_derecha(btnModificarCategoriaDe.getX(), btnModificarCategoriaDe.getX() + numeroMenos, 10,
+					10, btnModificarCategoriaDe);
+			Animacion.mover_derecha(lblModificarCategoriaDePago.getX(),
+					lblModificarCategoriaDePago.getX() + numeroMenos, 10, 10, lblModificarCategoriaDePago);
+			lblContador.setText("1");
+			btnAtras.setEnabled(false);
+			btnAdelante.setEnabled(true);
+
+		} else {
+			btnAtras.setEnabled(true);
+			btnAdelante.setEnabled(false);
+		}
+
+	}
+
+	protected void actionPerformedBtnAdelante(ActionEvent arg0) {
+
+		if (Integer.parseInt(lblContador.getText()) == 1) {
+
+			// btnAgregar
+			// lblImagenAgregarProductos
+			int numeroMenos = 736;
+			// Agrt
+			Animacion.mover_izquierda(btnAgregar.getX(), btnAgregar.getX() - numeroMenos, 10, 10, btnAgregar);
+			Animacion.mover_izquierda(lblImagenAgregarProductos.getX(), lblImagenAgregarProductos.getX() - numeroMenos,
+					10, 10, lblImagenAgregarProductos);
+			Animacion.mover_izquierda(btnAgregarCategoria.getX(), btnAgregarCategoria.getX() - numeroMenos, 10, 10,
+					btnAgregarCategoria);
+			Animacion.mover_izquierda(lblImagenAgregarCategoria.getX(), lblImagenAgregarCategoria.getX() - numeroMenos,
+					10, 10, lblImagenAgregarCategoria);
+			Animacion.mover_izquierda(btnAgregarCliente.getX(), btnAgregarCliente.getX() - numeroMenos, 10, 10,
+					btnAgregarCliente);
+			Animacion.mover_izquierda(lblAgregarClientes.getX(), lblAgregarClientes.getX() - numeroMenos, 10, 10,
+					lblAgregarClientes);
+			Animacion.mover_izquierda(btnAgregarTrabajador.getX(), btnAgregarTrabajador.getX() - numeroMenos, 10, 10,
+					btnAgregarTrabajador);
+			Animacion.mover_izquierda(lblImagenAgregarTrabajador.getX(),
+					lblImagenAgregarTrabajador.getX() - numeroMenos, 10, 10, lblImagenAgregarTrabajador);
+			// MOd
+			Animacion.mover_izquierda(btnModificarProductos.getX(), btnModificarProductos.getX() - numeroMenos, 10, 10,
+					btnModificarProductos);
+			Animacion.mover_izquierda(lblImagenModificarProductos.getX(),
+					lblImagenModificarProductos.getX() - numeroMenos, 10, 10, lblImagenModificarProductos);
+			Animacion.mover_izquierda(btnModificarCategoria.getX(), btnModificarCategoria.getX() - numeroMenos, 10, 10,
+					btnModificarCategoria);
+			Animacion.mover_izquierda(lblModificarCategoria.getX(), lblModificarCategoria.getX() - numeroMenos, 10, 10,
+					lblModificarCategoria);
+			Animacion.mover_izquierda(btnModificarTrabajador.getX(), btnModificarTrabajador.getX() - numeroMenos, 10,
+					10, btnModificarTrabajador);
+			Animacion.mover_izquierda(lblImagenModificarTrabajador.getX(),
+					lblImagenModificarTrabajador.getX() - numeroMenos, 10, 10, lblImagenModificarTrabajador);
+			Animacion.mover_izquierda(btnModificarClientes.getX(), btnModificarClientes.getX() - numeroMenos, 10, 10,
+					btnModificarClientes);
+			Animacion.mover_izquierda(lblModificarClientes.getX(), lblModificarClientes.getX() - numeroMenos, 10, 10,
+					lblModificarClientes);
+
+			// 2daHoja
+			Animacion.mover_izquierda(btnModificarInventario.getX(), btnModificarInventario.getX() - numeroMenos, 10,
+					10, btnModificarInventario);
+			Animacion.mover_izquierda(lblImagenModificarInventario.getX(),
+					lblImagenModificarInventario.getX() - numeroMenos, 10, 10, lblImagenModificarInventario);
+			Animacion.mover_izquierda(btnIngresarInventario.getX(), btnIngresarInventario.getX() - numeroMenos, 10, 10,
+					btnIngresarInventario);
+			Animacion.mover_izquierda(lblImagenIngresarInventario.getX(),
+					lblImagenIngresarInventario.getX() - numeroMenos, 10, 10, lblImagenIngresarInventario);
+			Animacion.mover_izquierda(btnIngresarCategoriaDe.getX(), btnIngresarCategoriaDe.getX() - numeroMenos, 10,
+					10, btnIngresarCategoriaDe);
+			Animacion.mover_izquierda(lblImagenIngresarCategoriaDePago.getX(),
+					lblImagenIngresarCategoriaDePago.getX() - numeroMenos, 10, 10, lblImagenIngresarCategoriaDePago);
+			Animacion.mover_izquierda(btnModificarCategoriaDe.getX(), btnModificarCategoriaDe.getX() - numeroMenos, 10,
+					10, btnModificarCategoriaDe);
+			Animacion.mover_izquierda(lblModificarCategoriaDePago.getX(),
+					lblModificarCategoriaDePago.getX() - numeroMenos, 10, 10, lblModificarCategoriaDePago);
+
+			lblContador.setText("2");
+			btnAdelante.setEnabled(false);
+			btnAtras.setEnabled(true);
+
+		} else {
+			btnAtras.setEnabled(false);
+			btnAdelante.setEnabled(true);
+		}
+	}
+
+	protected void actionPerformedBtnAgregarTrabajador(ActionEvent arg0) {
+		AgregarEmpleado agre = new AgregarEmpleado();
+		agre.setVisible(true);
+		agre.setLocationRelativeTo(null);
+	}
+
+	protected void actionPerformedBtnModificarTrabajador(ActionEvent arg0) {
+
+		ListaDeEmpleadosModificar lem = new ListaDeEmpleadosModificar();
+		lem.setVisible(true);
+		lem.setLocationRelativeTo(null);
+	}
+
+	protected void actionPerformedBtnAgregarCliente(ActionEvent arg0) {
+		/*
+
+		AgregarCliente agrc = new AgregarCliente();
+		agrc.setVisible(true);
+		agrc.setLocationRelativeTo(null);
+		/*
+	}
+
+	protected void actionPerformedBtnModificarClientes(ActionEvent arg0) {
+	/*
+		ListaDeClientesModificar lcm = new ListaDeClientesModificar();
+		lcm.setVisible(true);
+		lcm.setLocationRelativeTo(null);
+		*/
+
+	}
+}
